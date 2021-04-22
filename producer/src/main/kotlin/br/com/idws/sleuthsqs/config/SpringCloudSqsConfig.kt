@@ -34,7 +34,7 @@ class SpringCloudSqsConfig(
 
         val sqsMessageTracing: SqsMessageTracing = SqsMessageTracing.create(tracing)
 
-        return object : QueueMessagingTemplate(
+        return QueueMessagingTemplate(
             AmazonSQSAsyncClientBuilder
                 .standard()
                 .withRequestHandlers(sqsMessageTracing.requestHandler())
