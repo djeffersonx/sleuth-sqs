@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+cloud:
+  aws:
+    sqs:
+      endpoint: "http://localhost:4100"
+      queues:
+        message-queue-1: "${cloud.aws.sqs.endpoint}/100010001000/message-queue-1"
+        message-queue-2: "${cloud.aws.sqs.endpoint}/100010001000/message-queue-2"
+    region:
+      static: "us-east-1"
+
+spring:
+  application:
+    name: producer

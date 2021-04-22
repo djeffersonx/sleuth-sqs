@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  producer:
+    container_name: producer
+    build:
+      context: ./producer
+    image: sleuth-sqs/producer
+    hostname: sleuth-sqs-producer
+    depends_on:
+      - goaws
+    env_file:
+      - variables.env
+    ports:
+      - 8000:8000
+      - 8080:8080
+    init: true
+
+  consumer-1:
+    container_name: consumer-1
+    build:
+      context: ./consumer-1
+    image: sleuth-sqs/consumer-1
+    hostname: sleuth-sqs-consumer-1
+    depends_on:
+      - goaws
+      - producer
+    env_file:
+      - variables.env
+    ports:
+      - 8001:8001
+    init: true
+
+  consumer-2:
+    container_name: consumer-2
+    build:
+      context: ./consumer-2
+    image: sleuth-sqs/consumer-2
+    hostname: sleuth-sqs-consumer-2
+    depends_on:
+      - goaws
+      - producer
+      - consumer-1
+    env_file:
+      - variables.env
+    ports:
+      - 8082:8082
+    init: true
+
+  goaws:
+    container_name: goaws
+    image: pafortin/goaws
+    ports:
+      - 4100:4100
+    volumes:
+      - ./goaws.yml:/conf/goaws.yaml
