@@ -40,7 +40,7 @@ class SpringCloudSqsConfig(
                 .withRequestHandlers(sqsMessageTracing.requestHandler())
                 .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration(serviceEndpoint, awsRegion))
                 .build()
-        ) {
+        ) /*{
             override fun processHeadersToSend(headers: MutableMap<String, Any>?): MutableMap<String, Any>? {
                 val result = headers ?: mutableMapOf()
                 val span = tracer.currentSpan() ?: tracer.nextSpan()
@@ -48,7 +48,7 @@ class SpringCloudSqsConfig(
                 span.context()?.traceId()?.let { result.put("traceId", it) }
                 return result
             }
-        }
+        }*/
     }
 
 }
